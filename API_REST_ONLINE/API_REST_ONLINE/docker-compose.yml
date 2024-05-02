@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: online_service_database
+    ports:
+      - "5432:5432"
+    networks:
+      - postgres-network
+
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    networks:
+      - redis-network
+
+  api:
+    build: .
+    ports:
+      - "80:80"
+    environment:
+      CONNECTIONSTRINGS__POSTGRESQL: "Server=postgres;Port=5432;User Id=postgres;Password=passwordAPIKEY_123*;Database=online_service_database;"
+      REDIS_CONNECTIONSTRING: "redis://redis:6379"
+    networks:
+      - postgres-network
+      - redis-network
+
+networks:
+  postgres-network:
+  redis-network:
