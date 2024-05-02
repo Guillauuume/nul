@@ -1,0 +1,8 @@
+# Set the line ending style to LF for all files
+* text eol=lf
+
+# Set the line ending style to CRLF for specific files
+*.txt text eol=crlf
+
+# Denote binary files that should not have line endings modified
+*.png binary
